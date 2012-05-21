@@ -29,8 +29,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	- http://rperrot.developpez.com/articles/algo/structures/arbres/
 --]]
 
-local setmetatable = setmetatable
-local type = type
+--[[ Version history
+
+* 05/21/12 - v1.0 
+			Heap class and instance now managed with Lua Class System
+			Internal class structure modified, items now stored in a private "_heap" field
+			Added heap:init(), heap:top(), heap:replace(), heap:heap()			
+			
+* 05/14/12 - v0.3 - Initial Public Release
+--]]
+
+local require = require
 local assert = assert
 local ipairs,pairs = ipairs,pairs
 local floor = math.floor
@@ -42,14 +51,12 @@ local function f_min(a,b) return a<b end
 
 -- Percolates up datum in the heap recursively
 local function percolate_up(self,index)
-	local pIndex,tmpNode
+	local pIndex
 	if index > 1 then
 		pIndex = self:parentIndex(index)
-		if self.nodes[pIndex] then
-			if not (self.sort(self.nodes[pIndex].value,self.nodes[index].value)) then
-			tmpNode = self.nodes[pIndex]
-			self.nodes[pIndex] = self.nodes[index]
-			self.nodes[index] = tmpNode
+		if self._heap[pIndex] then
+			if not (self.sort(self._heap[pIndex].value,self._heap[index].value)) then
+			self._heap[pIndex],self._heap[index] = self._heap[index],self._heap[pIndex]
 			percolate_up(self,pIndex) -- Recursive call from the parent index
 			end
 		else
@@ -60,39 +67,38 @@ end
 
 -- Percolates down datum in the heap recursively
 local function percolate_down(self,index)
-	local lfIndex,rtIndex,minIndex,tmpNode
-	lfIndex = self:leftChildIndex(index)
-	rtIndex = self:rightChildIndex(index)
+	local lfIndex,rtIndex,minIndex
+	lfIndex = 2*index
+	rtIndex = lfIndex + 1
 	if rtIndex > self.size then
 		if lfIndex > self.size then return
 		else minIndex = lfIndex	end
 	else
-		if self.sort(self.nodes[lfIndex].value,self.nodes[rtIndex].value) then minIndex = lfIndex
-		else minIndex = rtIndex end
+		if self.sort(self._heap[lfIndex].value,self._heap[rtIndex].value) then
+		minIndex = lfIndex
+		else
+		minIndex = rtIndex
+		end
 	end
-	if not self.sort(self.nodes[index].value,self.nodes[minIndex].value) then
-	tmpNode = self.nodes[minIndex]
-	self.nodes[minIndex] = self.nodes[index]
-	self.nodes[index] = tmpNode
+	if not self.sort(self._heap[index].value,self._heap[minIndex].value) then
+	self._heap[index],self._heap[minIndex] = self._heap[minIndex],self._heap[index]
 	percolate_down(self,minIndex) -- Recursive call from the newly shifted index
 	end
 
 end
 
-
 -- The heap class
-local heap = {}
-heap.__index = heap
-heap.__version = "0.3"
+module(...,package.seeall)
+local LCS  = require (_PACKAGE..'third-party.LCS')
+local heap = LCS.class {_VERSION = "1.0", sort = f_min}
+
 
 -- Class constructor
 -- Returns a new heap [table]
-function heap:new()
-	return setmetatable( {
-						nodes = {}, -- Holds data inside the heap
-						size = 0,
-						sort = (type(comp) == 'function' and comp or f_min)
-						},heap)
+function heap:init(sort)
+	self._heap = {} -- Holds data inside the heap
+	self.size = 0
+	self.sort = sort or f_min
 end
 
 -- Checks if a heap is empty
@@ -110,7 +116,7 @@ end
 -- Clears the heap
 -- Returns nothing [nil]
 function heap:clear()
-	self.nodes = {}
+	self._heap = {}
 	self.size = 0
 end
 
@@ -135,12 +141,19 @@ function heap:parentIndex(index)
 	return floor(index/2)
 end
 
+-- Returns the top element in the heap
+-- Does not pop the heap
+function heap:top()
+	assert(not self:empty(),'Heap is empty')
+	return self._heap[1].value,self._heap[1].data
+end
+
 -- Inserts a value in the heap as a table {value = value, data = data}
 -- <data> Argument is optional and may represent extra information linked to <value> argument.
 -- Returns nothing [nil]
 function heap:insert(value,data)
 	self.size = self.size + 1
-	self.nodes[self.size] = {value = value, data = data}
+	self._heap[self.size] = {value = value, data = data}
 	percolate_up(self,self.size)
 end
 
@@ -148,9 +161,9 @@ end
 -- Returns this element unpacked: value first then data linked
 function heap:pop()
 	assert(not self:empty(), 'Heap is empty.')
-	local root = self.nodes[1]
-	self.nodes[1] = self.nodes[self.size]
-	self.nodes[self.size] = nil
+	local root = self._heap[1]
+	self._heap[1] = self._heap[self.size]
+	self._heap[self.size] = nil
 	self.size = self.size-1
 	if self.size>1 then
 		percolate_down(self,1)
@@ -161,18 +174,29 @@ end
 -- Checks if the given index is valid in the heap
 -- Returns the element stored in the heap at that very index [table], otherwise nil. [nil]
 function heap:checkIndex(index)
-	return self.nodes[index] or nil
+	return self._heap[index] or nil
+end
+
+-- Pops the first element in the heap
+-- Replaces it with the given element and reorders the heap
+-- The size of the heap is preserved
+function heap:replace(value,data)
+	assert(not self:empty(), 'heap is empty, use insert()')
+	local root = self._heap[1]
+	self._heap[1] = {value = value,data = data}
+	percolate_down(self,1)
+	return root.value,root.data
 end
 
 -- Resets the heap property regards to the comparison function given as argument (Optional)
 -- Returns nothing [nil]
 function heap:reset(comp)
 	self.sort = comp or self.comp
-	local nodes = self.nodes
-	self.nodes = {}
+	local _heap = self._heap
+	self._heap = {}
 	self.size = 0
-	for i in pairs(nodes) do
-		self:insert(nodes[i].value,nodes[i].data)
+	for i in pairs(_heap) do
+		self:insert(_heap[i].value,_heap[i].data)
 	end
 end
 
@@ -181,7 +205,7 @@ end
 function heap:merge(other)
 	assert(other:isValid(),'Argument is not a valid heap')
 	assert(self.sort(1,2) == other.sort(1,2),'Heaps must have the same sort functions')
-	for i,node in ipairs(other.nodes) do
+	for i,node in ipairs(other._heap) do
 		self:insert(node.value,node.data)
 	end
 end
@@ -202,15 +226,15 @@ function heap:isValid()
 	local i = 1
 	local lfIndex,rtIndex
 	for i = 1,(floor(self.size/2)) do
-		lfIndex = self:leftChildIndex(i)
-		rtIndex = self:rightChildIndex(i)
+		lfIndex = 2*i
+		rtIndex = lfIndex+1
 			if self:checkIndex(lfIndex) then
-				if not self.sort(self.nodes[i].value,self.nodes[lfIndex].value) then
+				if not self.sort(self._heap[i].value,self._heap[lfIndex].value) then
 					return false
 				end
 			end
 			if self:checkIndex(rtIndex) then
-				if not self.sort(self.nodes[i].value,self.nodes[rtIndex].value) then
+				if not self.sort(self._heap[i].value,self._heap[rtIndex].value) then
 					return false
 				end
 			end
@@ -219,18 +243,24 @@ function heap:isValid()
 end
 
 
+-- Restores the heap property
+-- Should be used when a heap was found non-valid
+function heap:heap()
+	assert(not self:empty(), 'Heap is empty')
+	for i = floor(self.size/2),1,-1 do
+		percolate_down(self,i)
+	end
+end
+
+
 -- (Debug utility) Create a string representation of the current
 -- Returns this string to be used with print() or tostring() [string]
 function heap.__tostring(self)
 	local out = ''
-	for k in ipairs(self.nodes) do
-		out = out.. (('Element %d - Value : %s\n'):format(k,tostring(self.nodes[k].value)))
+	for k in ipairs(self._heap) do
+		out = out.. (('Element %d - Value : %s\n'):format(k,tostring(self._heap[k].value)))
 	end
 	return out
 end
 
-
--- Shortcut for heap() call.
--- Returns heap class to a require call
-return setmetatable(heap,{__call = function(self,...) return self:new(...) end,})
-
+return heap

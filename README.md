@@ -10,26 +10,29 @@ It will return a table containing a set of functions, acting as a class.
 ##Functions Overview##
 		heap:new()  : Returns a new heap ( a Min-Heap by default).
 		heap()      : Same as heap:new()
+		
 		heap:empty() : Checks if a heap is empty.
 		heap:clear() : Clears a heap
 		heap:leftChildIndex(index) : Returns the left child index of element at position index in the heap
 		heap:rightChildIndex(index) : Returns the right child index of element at position index in the heap
 		heap:parentIndex(index) : Returns the parent index of element at position index in the heap
 		heap:insert(value,linkedData) : Inserts value with linked data in the heap and percolates it up at its proper place.
+		heap:replace(value,linkedData) : Saves the top of the heap, adds a new element at the top and reorders the heap. 		
 		heap:pop() : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked
 		heap:checkIndex() : checks existence of an element at position index in the heap.
 		heap:reset(function) : Reorders the current heap regards to the new comparison function given as argument
 		heap:merge(other) : merge the current heap with another
 		heap:isValid() : Checks if a heap is valid
+		heap:heap() : Restores the heap property (in case the heap was earlier found non-valid)		
 
 ##Additionnal features##
 		h1+h2 : Returns a new heap with all data stored inside h1 and h2 heaps
 		tostring(h) : Returns a string representation of heap h
 		print(h) : Prints current heap h as a string
 
-By default, you create Min-heaps. If you do need 'Max-heaps', you can easy do it this way:
-		local myHeap = heap:new()
-		myHeap.sort = function(a,b) return a>b end
+By default, you create Min-heaps. If you do need 'Max-heaps', you can easily create them this way:
+		local comp = function(a,b) return a>b end
+		local myHeap = heap(comp)
 		
 #Documentation used#
 * [Algolist.net data structure course][]
