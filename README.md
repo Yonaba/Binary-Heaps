@@ -34,6 +34,9 @@ By default, you create Min-heaps. If you do need 'Max-heaps', you can easily cre
 		local comp = function(a,b) return a>b end
 		local myHeap = heap(comp)
 		
+##Participating Libraries
+* [Lua Class System][]
+		
 #Documentation used#
 * [Algolist.net data structure course][]
 * [Victor S.Adamchik's Lecture on Cs.cmu.edu][]
@@ -65,3 +68,4 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [Algolist.net data structure course]: http://www.algolist.net/Data_structures/Binary_heap/Array-based_int_repr
 [Victor S.Adamchik's Lecture on Cs.cmu.edu]: http://www.cs.cmu.edu/~adamchik/15-121/lectures/Binary%20Heaps/heaps.html
 [RPerrot's Article on Developpez.com]: http://rperrot.developpez.com/articles/algo/structures/arbres/
+[Lua Class System]: https://github.com/Yonaba/Lua-Class-System

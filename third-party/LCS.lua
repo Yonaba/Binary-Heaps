@@ -23,12 +23,12 @@ freely, subject to the following restrictions:
 --[[
 ##Version history##
 
-* 05/21/12 - v1.0 
+* 05/21/12 - v1.0
 			Static classes renamed to Abstract Classes
 			Added an internal register to track all classes/instances created and store class __system field away from the class itself
 			Behaviour of [class]:getSubClasses modified (now returns an array indexed with tables)
 			'quickTour.lua' added
-			
+
 * 05/18/12 - v0.1 - Initial Release
 --]]
 
@@ -37,10 +37,13 @@ local pairs,ipairs = pairs,ipairs
 local assert = assert
 local setmetatable, getmetatable = setmetatable, getmetatable
 local insert = table.insert
+local type = type
 
 local baseClassMt = {__call = function (self,...) return self:new(...) end}
 local _register = { class = {}, object = {}}
 local Class
+
+module(...)
 
 -- Simple helper for building a raw copy of a table
 -- Only pointers to classes or objects stored as instances are preserved

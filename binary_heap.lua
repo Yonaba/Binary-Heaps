@@ -30,9 +30,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 --]]
 
 --[[ Version history
-
+* 05/25/12 - v1.1
+			Converted to module
+			
 * 05/21/12 - v1.0 
-			Heap class and instance now managed with Lua Class System
+			Heap class and instances now managed with Lua Class System
 			Internal class structure modified, items now stored in a private "_heap" field
 			Added heap:init(), heap:top(), heap:replace(), heap:heap()			
 			
@@ -87,11 +89,13 @@ local function percolate_down(self,index)
 
 end
 
--- The heap class
+
 module(...,package.seeall)
 local LCS  = require (_PACKAGE..'third-party.LCS')
-local heap = LCS.class {_VERSION = "1.0", sort = f_min}
+_M.LCS = nil
 
+-- The heap class
+local heap = LCS.class {_VERSION = "1.1", sort = f_min}
 
 -- Class constructor
 -- Returns a new heap [table]
