@@ -43,7 +43,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 local require = require
 local assert = assert
-local ipairs,pairs = ipairs,pairs
+local ipairs = ipairs
+local pairs = pairs
 local floor = math.floor
 local tostring = tostring
 
