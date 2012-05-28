@@ -29,17 +29,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	- http://rperrot.developpez.com/articles/algo/structures/arbres/
 --]]
 
---[[ Version history
-* 05/25/12 - v1.1
-			Converted to module
-			
-* 05/21/12 - v1.0 
-			Heap class and instances now managed with Lua Class System
-			Internal class structure modified, items now stored in a private "_heap" field
-			Added heap:init(), heap:top(), heap:replace(), heap:heap()			
-			
-* 05/14/12 - v0.3 - Initial Public Release
---]]
+
 
 local require = require
 local assert = assert
@@ -96,7 +86,7 @@ local LCS  = require (_PACKAGE..'third-party.LCS')
 _M.LCS = nil
 
 -- The heap class
-local heap = LCS.class {_VERSION = "1.1", sort = f_min}
+local heap = LCS.class {_VERSION = "1.2", sort = f_min}
 
 -- Class constructor
 -- Returns a new heap [table]
