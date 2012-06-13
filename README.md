@@ -12,6 +12,7 @@ It will return a table containing a set of functions, acting as a class.
 		heap()      : Same as heap:new()
 		
 		heap:empty() : Checks if a heap is empty.
+		heap:getSize() : Returns the size of the heap.
 		heap:clear() : Clears a heap
 		heap:leftChildIndex(index) : Returns the left child index of element at position index in the heap
 		heap:rightChildIndex(index) : Returns the right child index of element at position index in the heap

@@ -1,5 +1,8 @@
 #Version history#
 
+##1.3 (06/13/2012)
+* Naming collision fixed : size() was renamed getSize()
+
 ##1.2 (05/28/12)
 * Updated third-party library (Lua Class System)
 * Added version_history.md
