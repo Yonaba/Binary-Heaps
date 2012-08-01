@@ -1,7 +1,10 @@
 #Version history#
 
+##1.4 (08/01/2012)
+* Made the current module independant from [LuaClassSystem][]
+
 ##1.3 (06/13/2012)
-* Naming collision fixed : size() was renamed getSize()
+* Name clashing fixed : size() was renamed getSize()
 
 ##1.2 (05/28/12)
 * Updated third-party library (Lua Class System)
@@ -17,3 +20,5 @@
 
 ##0.3 (05/14/12)
 * Initial Release	
+
+[LuaClassSystem]: https://github.com/Yonaba/Lua-Class-System

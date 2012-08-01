@@ -37,6 +37,7 @@ local ipairs = ipairs
 local pairs = pairs
 local floor = math.floor
 local tostring = tostring
+local setmetatable = setmetatable
 
 -- Default sorting function.
 -- Used for Min-Heaps creation.
@@ -80,14 +81,14 @@ local function percolate_down(self,index)
 
 end
 
-
-module(...,package.seeall)
-local LCS  = require (_PACKAGE..'third-party.LCS')
-_M.LCS = nil
+-- Minimalistic heap class constructor
+local function newHeap(class,comp)
+	return setmetatable({_heap = {},sort = comp or f_min, size = 0},class)
+end
 
 -- The heap class
-local heap = LCS.class {_VERSION = "1.3"}
-heap.sort = f_min
+local heap = setmetatable({}, {__call = function(self,...) return newHeap(self,...) end})
+heap.__index = heap
 
 -- Class constructor
 -- Returns a new heap [table]

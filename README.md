@@ -35,9 +35,6 @@ By default, you create Min-heaps. If you do need 'Max-heaps', you can easily cre
 		local comp = function(a,b) return a>b end
 		local myHeap = heap(comp)
 		
-##Participating Libraries
-* [Lua Class System][]
-		
 #Documentation used#
 * [Algolist.net data structure course][]
 * [Victor S.Adamchik's Lecture on Cs.cmu.edu][]
