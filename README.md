@@ -18,6 +18,7 @@ It will return a table containing a set of functions, acting as a class.
 		heap:rightChildIndex(index) : Returns the right child index of element at position index in the heap
 		heap:parentIndex(index) : Returns the parent index of element at position index in the heap
 		heap:insert(value,linkedData) : Inserts value with linked data in the heap and percolates it up at its proper place.
+		heap:add(value, linkedData) : Alias to <tt>heap.insert</tt>
 		heap:replace(value,linkedData) : Saves the top of the heap, adds a new element at the top and reorders the heap. 		
 		heap:pop() : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked
 		heap:checkIndex() : checks existence of an element at position index in the heap.
@@ -35,6 +36,23 @@ By default, you create Min-heaps. If you do need 'Max-heaps', you can easily cre
 		local comp = function(a,b) return a>b end
 		local myHeap = heap(comp)
 		
+##Chaining##
+Some functions can be chained together, as they return the heap itself:
+
+    heap:clear()
+    heap:add() or heap:insert()
+    heap:reset()	
+    heap:merge()
+    heap:heap()
+
+Example:
+    
+	h = Heap()
+    h:add(1):add(2):heap():clear():add(3):add(4):merge(Heap()):reset()
+    print(h)
+    Element 1 - Value : 3
+    Element 2 - Value : 4
+	
 #Documentation used#
 * [Algolist.net data structure course][]
 * [Victor S.Adamchik's Lecture on Cs.cmu.edu][]

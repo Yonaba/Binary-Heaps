@@ -1,5 +1,12 @@
 #Version history#
 
+##1.5 (08/27/12)
+* Added chaining
+* Added <tt>Heap:add()</tt> as alias to <tt>Heap:insert()</tt>
+* Buxfix with <tt>Heap:reset()</tt>
+* Deleted unused <tt>Heap:init()</tt>
+* Code cleaning, Indentation Fixed
+
 ##1.4 (08/01/2012)
 * Made the current module independant from [LuaClassSystem][]
 
