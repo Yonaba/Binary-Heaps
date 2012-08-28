@@ -45,47 +45,82 @@
 
 <h2>Usage</h2>
 
-<p>Add 'binary_heap.lua' file inside your project.
-Call it using require command.
+<p>Add 'binary<em>heap.lua' file inside your project.
+Call it using __require</em>_ function.
 It will return a table containing a set of functions, acting as a class.</p>
 
-<h2>Functions Overview</h2>
-
-<pre><code>    heap:new()  : Returns a new heap ( a Min-Heap by default).
-    heap()      : Same as heap:new()
-
-    heap:empty() : Checks if a heap is empty.
-    heap:getSize() : Returns the size of the heap.
-    heap:clear() : Clears a heap
-    heap:leftChildIndex(index) : Returns the left child index of element at position index in the heap
-    heap:rightChildIndex(index) : Returns the right child index of element at position index in the heap
-    heap:parentIndex(index) : Returns the parent index of element at position index in the heap
-    heap:insert(value,linkedData) : Inserts value with linked data in the heap and percolates it up at its proper place.
-    heap:replace(value,linkedData) : Saves the top of the heap, adds a new element at the top and reorders the heap.        
-    heap:pop() : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked
-    heap:checkIndex() : checks existence of an element at position index in the heap.
-    heap:reset(function) : Reorders the current heap regards to the new comparison function given as argument
-    heap:merge(other) : merge the current heap with another
-    heap:isValid() : Checks if a heap is valid
-    heap:heap() : Restores the heap property (in case the heap was earlier found non-valid)     
-</code></pre>
-
-<h2>Additionnal features</h2>
-
-<pre><code>    h1+h2 : Returns a new heap with all data stored inside h1 and h2 heaps
-    tostring(h) : Returns a string representation of heap h
-    print(h) : Prints current heap h as a string
-</code></pre>
-
-<p>By default, you create Min-heaps. If you do need 'Max-heaps', you can easily create them this way:
-        local comp = function(a,b) return a&gt;b end
-        local myHeap = heap(comp)</p>
-
-<h2>Participating Libraries</h2>
+<h2>API</h2>
 
 <ul>
-<li><a href="http://yonaba.github.com/Lua-Class-System/">Lua Class System</a></li>
-</ul><h1>Documentation used</h1>
+<li>
+<strong>heap:new()</strong>  : Returns a new heap ( a Min-Heap by default).</li>
+<li>
+<strong>heap()</strong>      : Same as heap:new()<br>
+</li>
+<li>
+<strong>heap:empty()</strong> : Checks if a heap is empty.</li>
+<li>
+<strong>heap:getSize()</strong> : Returns the size of the heap.</li>
+<li>
+<strong>heap:clear()</strong> : Clears a heap</li>
+<li>
+<strong>heap:leftChildIndex(index)</strong> : Returns the left child index of element at position index in the heap</li>
+<li>
+<strong>heap:rightChildIndex(index)</strong> : Returns the right child index of element at position index in the heap</li>
+<li>
+<strong>heap:parentIndex(index)</strong> : Returns the parent index of element at position index in the heap</li>
+<li>
+<strong>heap:insert(value,linkedData)</strong> : Inserts value with linked data in the heap and percolates it up at its proper place.</li>
+<li>
+<strong>heap:add(value, linkedData)</strong> : Alias to <tt>heap.insert</tt>
+</li>
+<li>
+<strong>heap:replace(value,linkedData)</strong> : Saves the top of the heap, adds a new element at the top and reorders the heap.<br>
+</li>
+<li>
+<strong>heap:pop()</strong> : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked</li>
+<li>
+<strong>heap:checkIndex()</strong> : checks existence of an element at position index in the heap.</li>
+<li>
+<strong>heap:reset(function)</strong> : Reorders the current heap regards to the new comparison function given as argument</li>
+<li>
+<strong>heap:merge(other)</strong> : merge the current heap with another</li>
+<li>
+<strong>heap:isValid()</strong> : Checks if a heap is valid</li>
+<li>
+<strong>heap:heap()</strong> : Restores the heap property (in case the heap was earlier found non-valid)</li>
+</ul><h2>Additionnal features</h2>
+
+<div class="highlight"><pre><span class="n">h1</span><span class="o">+</span><span class="n">h2</span> <span class="p">:</span> <span class="n">Returns</span> <span class="n">a</span> <span class="n">new</span> <span class="n">heap</span> <span class="n">with</span> <span class="n">all</span> <span class="n">data</span> <span class="n">stored</span> <span class="n">inside</span> <span class="n">h1</span> <span class="ow">and</span> <span class="n">h2</span> <span class="n">heaps</span>
+<span class="nb">tostring</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="p">:</span> <span class="n">Returns</span> <span class="n">a</span> <span class="n">string</span> <span class="n">representation</span> <span class="n">of</span> <span class="n">heap</span> <span class="n">h</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="p">:</span> <span class="n">Prints</span> <span class="n">current</span> <span class="n">heap</span> <span class="n">h</span> <span class="n">as</span> <span class="n">a</span> <span class="n">string</span>
+</pre></div>
+
+<p>By default, you create Min-heaps. If you do need <strong>Max-heaps</strong>, you can easily create them this way:</p>
+
+<div class="highlight"><pre><span class="kd">local</span> <span class="n">comp</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">return</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span> <span class="k">end</span>
+<span class="kd">local</span> <span class="n">myHeap</span> <span class="o">=</span> <span class="n">heap</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+</pre></div>
+
+<h2>Chaining</h2>
+
+<p>Some functions can be chained together, as they return the heap itself:</p>
+
+<div class="highlight"><pre><span class="n">heap</span><span class="p">:</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">heap</span><span class="p">:</span><span class="n">add</span><span class="p">()</span> <span class="ow">or</span> <span class="n">heap</span><span class="p">:</span><span class="n">insert</span><span class="p">()</span>
+<span class="n">heap</span><span class="p">:</span><span class="n">reset</span><span class="p">()</span>    
+<span class="n">heap</span><span class="p">:</span><span class="n">merge</span><span class="p">()</span>
+<span class="n">heap</span><span class="p">:</span><span class="n">heap</span><span class="p">()</span>
+</pre></div>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="n">h</span> <span class="o">=</span> <span class="n">Heap</span><span class="p">()</span>
+<span class="n">h</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span><span class="n">heap</span><span class="p">():</span><span class="n">clear</span><span class="p">():</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span><span class="n">merge</span><span class="p">(</span><span class="n">Heap</span><span class="p">()):</span><span class="n">reset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+
+<h1>Documentation used</h1>
 
 <ul>
 <li><a href="http://www.algolist.net/Data_structures/Binary_heap/Array-based_int_repr">Algolist.net data structure course</a></li>
