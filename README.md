@@ -4,54 +4,62 @@ Implementation of *binary heaps* data structure in pure Lua
 	
 ##Usage##
 Add 'binary_heap.lua' file inside your project.
-Call it using require command.
+Call it using __require__ function.
 It will return a table containing a set of functions, acting as a class.
 	
-##Functions Overview##
-		heap:new()  : Returns a new heap ( a Min-Heap by default).
-		heap()      : Same as heap:new()
-		
-		heap:empty() : Checks if a heap is empty.
-		heap:getSize() : Returns the size of the heap.
-		heap:clear() : Clears a heap
-		heap:leftChildIndex(index) : Returns the left child index of element at position index in the heap
-		heap:rightChildIndex(index) : Returns the right child index of element at position index in the heap
-		heap:parentIndex(index) : Returns the parent index of element at position index in the heap
-		heap:insert(value,linkedData) : Inserts value with linked data in the heap and percolates it up at its proper place.
-		heap:add(value, linkedData) : Alias to <tt>heap.insert</tt>
-		heap:replace(value,linkedData) : Saves the top of the heap, adds a new element at the top and reorders the heap. 		
-		heap:pop() : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked
-		heap:checkIndex() : checks existence of an element at position index in the heap.
-		heap:reset(function) : Reorders the current heap regards to the new comparison function given as argument
-		heap:merge(other) : merge the current heap with another
-		heap:isValid() : Checks if a heap is valid
-		heap:heap() : Restores the heap property (in case the heap was earlier found non-valid)		
+##API##
+
+
+* __heap:new()__  : Returns a new heap ( a Min-Heap by default).
+* __heap()__      : Same as heap:new()	
+* __heap:empty()__ : Checks if a heap is empty.
+* __heap:getSize()__ : Returns the size of the heap.
+* __heap:clear()__ : Clears a heap
+* __heap:leftChildIndex(index)__ : Returns the left child index of element at position index in the heap
+* __heap:rightChildIndex(index)__ : Returns the right child index of element at position index in the heap
+* __heap:parentIndex(index)__ : Returns the parent index of element at position index in the heap
+* __heap:insert(value,linkedData)__ : Inserts value with linked data in the heap and percolates it up at its proper place.
+* __heap:add(value, linkedData)__ : Alias to <tt>heap.insert</tt>
+* __heap:replace(value,linkedData)__ : Saves the top of the heap, adds a new element at the top and reorders the heap. 		
+* __heap:pop()__ : Pops the top element, reorders the heap and returns this element unpacked : value first then data linked
+* __heap:checkIndex()__ : checks existence of an element at position index in the heap.
+* __heap:reset(function)__ : Reorders the current heap regards to the new comparison function given as argument
+* __heap:merge(other)__ : merge the current heap with another
+* __heap:isValid()__ : Checks if a heap is valid
+* __heap:heap()__ : Restores the heap property (in case the heap was earlier found non-valid)
 
 ##Additionnal features##
-		h1+h2 : Returns a new heap with all data stored inside h1 and h2 heaps
-		tostring(h) : Returns a string representation of heap h
-		print(h) : Prints current heap h as a string
 
-By default, you create Min-heaps. If you do need 'Max-heaps', you can easily create them this way:
-		local comp = function(a,b) return a>b end
-		local myHeap = heap(comp)
-		
+```lua
+h1+h2 : Returns a new heap with all data stored inside h1 and h2 heaps
+tostring(h) : Returns a string representation of heap h
+print(h) : Prints current heap h as a string
+```
+By default, you create Min-heaps. If you do need __Max-heaps__, you can easily create them this way:
+
+```lua
+local comp = function(a,b) return a>b end
+local myHeap = heap(comp)
+```
+
 ##Chaining##
 Some functions can be chained together, as they return the heap itself:
 
-    heap:clear()
-    heap:add() or heap:insert()
-    heap:reset()	
-    heap:merge()
-    heap:heap()
+```lua 
+heap:clear()
+heap:add() or heap:insert()
+heap:reset()	
+heap:merge()
+heap:heap()
+```
 
 Example:
-    
-	h = Heap()
-    h:add(1):add(2):heap():clear():add(3):add(4):merge(Heap()):reset()
-    print(h)
-    Element 1 - Value : 3
-    Element 2 - Value : 4
+
+```lua     
+h = Heap()
+h:add(1):add(2):heap():clear():add(3):add(4):merge(Heap()):reset()
+print(h)
+```
 	
 #Documentation used#
 * [Algolist.net data structure course][]
