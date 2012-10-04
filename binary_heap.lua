@@ -41,13 +41,13 @@ local setmetatable = setmetatable
 
 -- Default sorting function.
 -- Used for Min-Heaps creation.
-local function f_min(a,b) return a<b end
+local function f_min(a,b) return a < b end
 
 -- Percolates up datum in the heap recursively
 local function percolate_up(self,index)
   local pIndex
   if index > 1 then
-    pIndex = self:parentIndex(index)
+    pIndex = floor(index/2)
     if self._heap[pIndex] then
       if not (self.sort(self._heap[pIndex].value,self._heap[index].value)) then
         self._heap[pIndex],self._heap[index] = self._heap[index],self._heap[pIndex]
@@ -78,7 +78,6 @@ local function percolate_down(self,index)
     self._heap[index],self._heap[minIndex] = self._heap[minIndex],self._heap[index]
     percolate_down(self,minIndex) -- Recursive call from the newly shifted index
   end
-
 end
 
 -- Minimalistic heap class constructor
