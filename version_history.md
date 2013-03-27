@@ -1,5 +1,9 @@
 #Version history#
 
+##1.5.1 (03/27/2013)
+* `heap()` handles an optional arg `item`
+* `heap()` now returns in case it wa found empty.
+
 ##1.5 (08/27/12)
 * Added chaining
 * Added <tt>Heap:add()</tt> as alias to <tt>Heap:insert()</tt>
