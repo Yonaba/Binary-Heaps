@@ -26,7 +26,7 @@ It will return a table containing a set of functions, acting as a class.
 * __heap:reset(function)__ : Reorders the current heap regards to the new comparison function given as argument
 * __heap:merge(other)__ : merge the current heap with another
 * __heap:isValid()__ : Checks if a heap is valid
-* __heap:heap()__ : Restores the heap property (in case the heap was earlier found non-valid)
+* __heap:heap(item)__ : Restores the heap property (in case the heap was earlier found non-valid)
 
 ##Additionnal features##
 

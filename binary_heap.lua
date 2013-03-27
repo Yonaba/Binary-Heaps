@@ -1,27 +1,6 @@
--- Copyright (c) 2012 Roland Yonaba
-
---[[
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
---]]
-
+-- Copyright (c) 2012-2013 Roland Yonaba
 -- An implementation of Binary Heaps data structure in pure Lua
+
 --[[
   Documentation :
   - http://www.algolist.net/Data_structures/Binary_heap/Array-based_int_repr
@@ -42,6 +21,14 @@ local setmetatable = setmetatable
 -- Default sorting function.
 -- Used for Min-Heaps creation.
 local function f_min(a,b) return a < b end
+
+-- Value lookup in a table
+local indexOf = function(t,v)
+	for i = 1,#t do
+		if t[i] == v then return i end
+	end
+	return nil
+end
 
 -- Percolates up datum in the heap recursively
 local function percolate_up(self,index)
@@ -239,12 +226,20 @@ end
 
 -- Restores the heap property
 -- Should be used when a heap was found non-valid
-function heap:heap()
-  assert(not self:empty(), 'Heap is empty')
-  for i = floor(self.size/2),1,-1 do
-    percolate_down(self,i)
-  end
-  return self
+function heap:heap(item)
+  if (self.size == 0) then return end
+	if item then
+		local i = indexOf(self.__heap,item)
+		if i then 
+			percolate_down(self, i)
+			percolate_up(self, i)
+		end
+		return
+	end
+	for i = floor(self.size/2),1,-1 do
+		percolate_down(self,i)
+	end
+	return self
 end
 
 
