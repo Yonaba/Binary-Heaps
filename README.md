@@ -93,3 +93,6 @@ Copyright (c) 2012 Roland Yonaba
 [Victor S.Adamchik's Lecture on Cs.cmu.edu]: http://www.cs.cmu.edu/~adamchik/15-121/lectures/Binary%20Heaps/heaps.html
 [RPerrot's Article on Developpez.com]: http://rperrot.developpez.com/articles/algo/structures/arbres/
 [Lua Class System]: http://yonaba.github.com/Lua-Class-System/
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Yonaba/binary-heaps/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
